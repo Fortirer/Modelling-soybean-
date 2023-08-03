@@ -4,7 +4,8 @@ library(TxDb.Dmelanogaster.UCSC.dm3.ensGene)
 #file_list <- list.files("/home/rstudio/inhouse",recursive = TRUE, pattern = "*bam$",full=TRUE)
 file_list <- list.files("/srv/database/data/NGS_raw_data/transcriptome/rnaSeq_lafieco/soja/inhouse", recursive = TRUE, pattern = "*bam$", full = TRUE)
 
-scp -r  /srv/database/data/NGS_raw_data/transcriptome/rnaSeq_lafieco/soja/Gmax_275_Wm82.a2.v1.gene.gff3 janaina@143.107.247.188:/home/janaina/Downloads/
+# download from pc to server
+#scp -r  /srv/database/data/NGS_raw_data/transcriptome/rnaSeq_lafieco/soja/Gmax_275_Wm82.a2.v1.gene.gff3 janaina@143.107.247.188:/home/janaina/Downloads/
 
 gff3file <- file.path("/home/janaina/Downloads/Gmax_275_Wm82.a2.v1.gene.gff3") # gene
 txdb <- makeTxDbFromGFF(gff3file, format="gff3", circ_seqs=character())
