@@ -1,0 +1,35 @@
+# script to limma
+#title: "limma PipeLine"
+#author: "Brandon YEO"
+#date: '2023-08-02'
+
+
+library(limma)
+library(edgeR)
+
+counts <- read.delim("Inhouse_normalised_cpmlimma.tsv", row.name=1)
+
+group <- factor(group, levels=c("A.6","I5.6","I8.6","I9.6"))
+#> f <- factor(targets$Target, levels=c("RNA1","RNA2","RNA3"))
+
+
+ f <- factor(counts[0,], levels=c("A","I5","I8", "I9"))
+ 
+ group <- factor(group, levels=c("A.6","I5.6","I8.6","I9.6"))
+ 
+
+design <- model.matrix(~0+f)
+
+pdf(file = "/home/janaina/Downloads/voom.pdf")   # The directory you want to save the file in
+voom.y.d <- voom(d, mm, plot = T)
+dev.off()
+
+
+
+ contr <- makeContrasts(groupI9.6 - groupI5.6, levels = colnames(coef(fit)))
+ 
+  contr <- makeContrasts(groupI9.6 - groupI5.6, groupA.6-groupI5.6, groupA.6-groupI8.6, groupA.6-groupI9.6, levels = colnames(coef(fit)))
+
+pdf(file = "/home/janaina/Downloads/venn.pdf")   # The directory you want to save the file in
+vennDiagram(results)
+dev.off()
