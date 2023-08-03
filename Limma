@@ -2,35 +2,75 @@
 #title: "limma PipeLine"
 #author: "Brandon YEO"
 #date: '2023-08-02'
-
+#pipeline by from https://ucdavis-bioinformatics-training.github.io/2018-June-RNA-Seq-Workshop/thursday/DE.html
 
 library(limma)
 library(edgeR)
 
-counts <- read.delim("Inhouse_normalised_cpmlimma.tsv", row.name=1)
+setwd("/home/janaina/Downloads")
+getwd()
 
-group <- factor(group, levels=c("A.6","I5.6","I8.6","I9.6"))
-#> f <- factor(targets$Target, levels=c("RNA1","RNA2","RNA3"))
+counts <- read.delim("Inhouse_raw_cpm_limma.tsv", row.names=1)
+head(counts)
 
+d0 <- DGEList(counts)
+d0 <- calcNormFactors(d0)
+cutoff <- 1
+drop <- which(apply(cpm(d0), 1, max) < cutoff)
+d <- d0[-drop,] 
+str(counts)
 
- f <- factor(counts[0,], levels=c("A","I5","I8", "I9"))
- 
- group <- factor(group, levels=c("A.6","I5.6","I8.6","I9.6"))
- 
+dim(counts)
 
-design <- model.matrix(~0+f)
+dim(d)
 
-pdf(file = "/home/janaina/Downloads/voom.pdf")   # The directory you want to save the file in
-voom.y.d <- voom(d, mm, plot = T)
+snames <- colnames(counts) # Sample names
+snames
+
+cultivar <- substr(snames, 1, nchar(snames) - 1) 
+cultivar
+cultivar <- as.factor(cultivar)
+
+pdf(file = "/home/janaina/Downloads/MDSlimma.pdf")   # The directory you want to save the file in
+plotMDS(d, col = as.numeric(cultivar))
 dev.off()
 
-contr <- makeContrasts(cultivarElev-cultivarElevTemp,cultivarElev-cultivarAmb, cultivarElev-cultivarTemp,cultivarElevTemp-cultivarAmb,cultivarElevTemp-cultivarTemp, cultivarAmb-cultivarTemp , levels = colnames(coef(fit)))
+mm <- model.matrix(~0 + cultivar)
+mm
 
+pdf(file = "/home/janaina/Downloads/voomlimma.pdf")   # The directory you want to save the file in
+y <- voom(d, mm, plot = T)
+dev.off()
 
- contr <- makeContrasts(groupI9.6 - groupI5.6, levels = colnames(coef(fit)))
- 
-  contr <- makeContrasts(groupI9.6 - groupI5.6, groupA.6-groupI5.6, groupA.6-groupI8.6, groupA.6-groupI9.6, levels = colnames(coef(fit)))
+pdf(file = "/home/janaina/Downloads/voom2limma.pdf")   # The directory you want to save the file in
+tmp <- voom(d0, mm, plot = T)
+dev.off
 
 pdf(file = "/home/janaina/Downloads/venn.pdf")   # The directory you want to save the file in
 vennDiagram(results)
 dev.off()
+
+fit <- lmFit(y, mm)
+fit
+
+head(coef(fit))
+cultivar
+
+contr <- makeContrasts(cultivarElev-cultivarElevTemp,cultivarElev-cultivarAmb, cultivarElev-cultivarTemp,cultivarElevTemp-cultivarAmb,cultivarElevTemp-cultivarTemp, cultivarAmb-cultivarTemp , levels = colnames(coef(fit)))
+contr
+
+tmp <- contrasts.fit(fit, contr)
+tmp
+
+tmp <- eBayes(tmp)
+tmp
+
+top.table <- topTable(tmp, sort.by = "P", n = Inf)
+
+top.table <- topTable(tmp, sort.by = "P")
+
+top.table <- topTable(tmp)
+
+head(top.table)
+
+top<-length(which(top.table$adj.P.Val < 0.05))
