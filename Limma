@@ -46,6 +46,7 @@ pdf(file = "/home/janaina/Downloads/voom2limma.pdf")   # The directory you want 
 tmp <- voom(d0, mm, plot = T)
 dev.off
 
+# ERROR more than 5 sets
 pdf(file = "/home/janaina/Downloads/venn.pdf")   # The directory you want to save the file in
 vennDiagram(results)
 dev.off()
