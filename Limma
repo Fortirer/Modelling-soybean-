@@ -24,6 +24,7 @@ pdf(file = "/home/janaina/Downloads/voom.pdf")   # The directory you want to sav
 voom.y.d <- voom(d, mm, plot = T)
 dev.off()
 
+contr <- makeContrasts(cultivarElev-cultivarElevTemp,cultivarElev-cultivarAmb, cultivarElev-cultivarTemp,cultivarElevTemp-cultivarAmb,cultivarElevTemp-cultivarTemp, cultivarAmb-cultivarTemp , levels = colnames(coef(fit)))
 
 
  contr <- makeContrasts(groupI9.6 - groupI5.6, levels = colnames(coef(fit)))
