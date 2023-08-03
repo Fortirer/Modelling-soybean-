@@ -74,4 +74,4 @@ top.table <- topTable(tmp)
 
 head(top.table)
 
-top<-length(which(top.table$adj.P.Val < 0.05))
+length(which(top.table$adj.P.Val < 0.05))
