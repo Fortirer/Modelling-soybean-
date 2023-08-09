@@ -1,0 +1,44 @@
+# 08/31/2023
+# function merge to annotation DE punion with annotatio Database
+# Janaina da Silva Fortirer
+
+#In R import library
+library("dplyr") # import library
+library("stringr") # import library
+
+# transID Glyma.10G030500.1   have one variation in the last number, e.g.  [.1]
+# this characteristic return ERROR in merge funcion, because didn't find any the same ID
+# my solucicion was created new file without this number > copy > past > remove collum by read separeted by point
+# son on read file  without this number example collum, just with ID number [10G030500] 
+
+# set the path
+getwd()
+setwd("/home/janaina/Downloads")
+
+#load the files
+ID <- read.csv("IDsem1.csv")
+str(ID)
+
+annot <- read.csv("annotsem1.csv")
+str(annot)
+
+koannot <- read.csv("koannot.csv")
+str(koannot)
+
+#function merge
+anotacao1 <- merge(ID, annot, by="transID", all.x= TRUE)
+str(anotacao1)
+
+#write dataframe
+write.csv(anotacao1, "/home/janaina/Downloads/anotacao1.csv", row.names=F)
+
+#attribuing file an object 
+anotacao1 <- read.csv("anotacao1.csv")
+str(anotacao1)
+
+#merge anotacao1 with koannot
+anotacao2 <- merge(anotacao1, koannot, by="transID", all.x=TRUE)
+str(anotacao2)
+
+#write anotacao2
+write.csv(anotacao2, "/home/janaina/Downloads/anotacao2.csv", row.names=F)
