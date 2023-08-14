@@ -26,11 +26,11 @@ koannot <- read.csv("koannot.csv")
 str(koannot)
 
 #function merge
-anotacao1 <- merge(ID, annot, by="transID", all.x= TRUE)
-str(anotacao1)
+#anotacao1 <- merge(ID, annot, by="transID", all.x= TRUE)
+#str(anotacao1)
 
 #write dataframe
-write.csv(anotacao1, "/home/janaina/Downloads/anotacao1.csv", row.names=F)
+#write.csv(anotacao1, "/home/janaina/Downloads/anotacao1.csv", row.names=F)
 
 #attribuing file an object 
 anotacao1 <- read.csv("anotacao1.csv")
