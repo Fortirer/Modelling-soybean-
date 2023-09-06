@@ -1,7 +1,7 @@
 # para levar o arquivo do seu pc para o servidor
 
         #dir no seu pc                                                                                               # dir no servidor
-scp -r /home/janainafortirer/Downloads/*csv janaina@143.107.247.188:/home/janaina/Downloads
+scp -r /home/janainafortirer/Downloads/*csv janaina@143.000.000.000:/home/janaina/Downloads
 
 
 Fonte: https://www.datanovia.com/en/lessons/identify-and-remove-duplicate-data-in-r/
