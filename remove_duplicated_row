@@ -1,3 +1,28 @@
-Fonte: https://www.datanovia.com/en/lessons/identify-and-remove-duplicate-data-in-r/
+# para levar o arquivo do seu pc para o servidor
 
-my_data %>% distinct()
+        #dir no seu pc                                                                                               # dir no servidor
+scp -r /home/janainafortirer/Downloads/*csv janaina@143.107.247.188:/home/janaina/Downloads
+
+
+Fonte: https://www.datanovia.com/en/lessons/identify-and-remove-duplicate-data-in-r/
+library("dplyr")
+
+
+setwd("/home/janaina/Downloads")
+getwd()
+df <- read.delim("anotacao_Elev.Temp-Amb.csv", sep = ",", header =T)
+# df <- unique(df)
+#df <-df %>% distinct()
+df <- df%>% distinct(LogFC_sd, .keep_all = TRUE)  # remove all duplicated ros based on specific collum
+
+write.csv(df, "/home/janaina/Downloads/df.csv", row.names=F)
+
+
+scp -r janaina@143.107.247.188:/home/janaina/Downloads/*csv /home/janainafortirer/Downloads
+
+
+
+
+df <- read.delim("anotacao_Temp-Amb.csv", sep = ",", header =T)
+
+write.csv(df, "/home/janaina/Downloads/dfTemp-Amb.csv", row.names=F)
