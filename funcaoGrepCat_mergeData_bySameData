@@ -1,0 +1,13 @@
+# autor Alexandre 
+
+# terminal linux
+           # pode ser qualquer formato arquivo  pega no arquivo X coluna X , os mesmos valores na tabela Y , coluna Y.
+for i in $(cat teste_DE.fasta); do grep $i normalised_cpm.tsv; done 
+
+                                                                   # verifica a quantidade
+for i in $(cat teste_DE.fasta); do grep $i normalised_cpm.tsv; done | wc -l
+
+                                                                      # > salva o arquivo 
+for i in $(cat teste_DE.fasta); do grep $i normalised_cpm.tsv; done > file_teste.csv
+
+
