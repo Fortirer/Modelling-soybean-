@@ -11,3 +11,10 @@ for i in $(cat path/teste_DE.fasta); do grep $i path/normalised_cpm.tsv; done | 
 for i in $(cat path/teste_DE.fasta); do grep $i path/normalised_cpm.tsv; done > file_teste.csv
 
 
+Exemplos:
+
+user@user: cd Downloads
+
+for i in $(cat ID_Elev-Temp.txt); do grep $i Inhouse_raw_cpm.tsv; done 
+for i in $(cat ID_Elev-Temp.txt); do grep $i Inhouse_raw_cpm.tsv; done | wc -l
+for i in $(cat ID_Elev-Temp.txt); do grep $i Inhouse_raw_cpm.tsv; done > Elev-Temp_raw_cpm.csv
