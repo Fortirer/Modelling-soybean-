@@ -1,0 +1,47 @@
+getwd()
+setwd("C:/Users/LAFIECO/Downloads")
+
+df <- read.csv("dfElev.csv", sep=";")
+
+df$Trataments <- as.factor(df$Trataments)
+str(df)
+
+modelo <- glm(Grain ~ NumberFlowers, data = df, family='Gamma'(link='log'))
+summary(modelo)
+
+
+valores_preditos <- predict(modelo, type = "response")
+# Calcular os valores observados
+valores_observados <- df$Grain
+
+# VALORES OBSERVADOR
+# Calcular a média
+media <- mean(valores_observados)
+media
+
+# Calcular o desvio padrão
+desvio_padrao <- sd(valores_observados)
+desvio_padrao
+
+# Calcular o tamanho da amostra
+tamanho_amostra <- length(valores_observados)
+
+# Calcular o erro padrão da média
+erro_media <- desvio_padrao / sqrt(tamanho_amostra)
+erro_media
+
+# VALORES PREDITOS
+# Calcular a média
+media <- mean(valores_preditos)
+media
+
+# Calcular o desvio padrão
+desvio_padrao <- sd(valores_preditos)
+desvio_padrao
+
+# Calcular o tamanho da amostra
+tamanho_amostra <- length(valores_preditos)
+
+# Calcular o erro padrão da média
+erro_media <- desvio_padrao / sqrt(tamanho_amostra)
+erro_media
